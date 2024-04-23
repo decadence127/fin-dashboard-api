@@ -1,4 +1,4 @@
-package main
+package mongoInstance
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 
 var mongoClient *mongo.Client
 
-func connectToMongoDB() error {
+func ConnectToMongoDB() error {
 
 	mongoURI := os.Getenv("MONGO_URI")
 
@@ -32,4 +32,8 @@ func connectToMongoDB() error {
 	err = client.Ping(context.TODO(), nil)
 	mongoClient = client
 	return err
+}
+
+func GetCollection(collectionName string) *mongo.Collection {
+	return mongoClient.Database(os.Getenv("DB_NAME")).Collection(collectionName)
 }

@@ -4,6 +4,9 @@ import (
 	"log"
 	"os"
 
+	mongoInstance "fin-dashboard-api/app"
+	"fin-dashboard-api/app/routes"
+
 	"github.com/lpernett/godotenv"
 )
 
@@ -12,11 +15,11 @@ func main() {
 		log.Fatal("Error loading .env file:", err)
 	}
 
-	if err := connectToMongoDB(); err != nil {
+	if err := mongoInstance.ConnectToMongoDB(); err != nil {
 		log.Fatal("Could not connect to MongoDB:", err)
 	}
 
-	router := getRouter()
+	router := routes.GetRouter()
 
 	port := os.Getenv("PORT")
 	if port == "" {
